@@ -1,6 +1,6 @@
 # 物理服务器、NUMA 与 PCIe 根层次
 
-本篇对应 [[02-AISystem/cluster-and-hardware/GPU服务器：从物理硬件到Linux设备系统|GPU 服务器知识地图]] 的第 1 阶段。目标是看到一张服务器框图或 Linux 拓扑时，能回答三个问题：计算线程在哪里执行，数据存在哪块内存，设备通过哪条主机 IO 路径接入。先建立这些关系，下一篇再深入 BDF、Bridge 和枚举。
+本篇对应 [[02-AISystem/cluster-and-hardware/00-Overview-GPU服务器：从物理硬件到Linux设备系统|GPU 服务器知识地图]] 的第 1 阶段。目标是看到一张服务器框图或 Linux 拓扑时，能回答三个问题：计算线程在哪里执行，数据存在哪块内存，设备通过哪条主机 IO 路径接入。先建立这些关系，下一篇再深入 BDF、Bridge 和枚举。
 
 参考平台沿用 DGX H100，讨论范围以双路 x86、离散 GPU、主机 DRAM 和 PCIe IO 为主。本篇不把 Grace Hopper 等 CPU–GPU 一致性互联系统的内存语义直接套入该模型。以下精简拓扑与输出均为教学示意；未访问用户服务器、运行命令或测量性能。
 
@@ -197,4 +197,4 @@ head -n 12 "/proc/$$/numa_maps"
 
 本篇提供事实性机制说明与教学推理；平台局部示意图不是实际 DGX 布线图，Debug 分支不是已确认故障。没有运行观察命令、修改服务器设置或执行性能测试。实际服务器型号、BIOS NUMA 配置、版本以及现有 XML 来源仍待确认。
 
-下一篇见 [[01-ComputerScience/SoC/PCIE/PCIe拓扑与BDF：从设备地址追踪上游|PCIe 拓扑与 BDF：从设备地址追踪上游]]，对应知识地图第 2 阶段，解释 Root Port/Bridge/Endpoint、BDF 与 sysfs 树的对应，重点解决“从一个地址沿上游追踪”和“总线号、实体卡、端口数量为什么不等价”。
+下一篇见 [[02-AISystem/cluster-and-hardware/02-PCIe拓扑与BDF：从设备地址追踪上游|PCIe 拓扑与 BDF：从设备地址追踪上游]]，对应知识地图第 2 阶段，解释 Root Port/Bridge/Endpoint、BDF 与 sysfs 树的对应，重点解决“从一个地址沿上游追踪”和“总线号、实体卡、端口数量为什么不等价”。

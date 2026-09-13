@@ -1,6 +1,6 @@
 # 配置空间、BAR 与 MMIO：从设备身份到地址资源
 
-本篇是 [[02-AISystem/cluster-and-hardware/GPU服务器：从物理硬件到Linux设备系统|GPU 服务器学习地图]] 第 4 阶段的第一篇，承接 [[02-AISystem/cluster-and-hardware/从上电到设备枚举：Firmware与Linux的职责边界|从上电到设备枚举]]。核心问题是：Linux 已有某个 GPU/NIC 的 BDF，为什么驱动仍可能无法使用它？本篇从设备身份走到地址资源，解释配置空间、BAR、MMIO 和上游资源窗口。DMA/IOMMU、中断、链路与错误恢复后续分别展开，不把本篇成文视为第 4 阶段全部完成。
+本篇是 [[02-AISystem/cluster-and-hardware/00-Overview-GPU服务器：从物理硬件到Linux设备系统|GPU 服务器学习地图]] 第 4 阶段的第一篇，承接 [[02-AISystem/cluster-and-hardware/03-从上电到设备枚举：Firmware与Linux的职责边界|从上电到设备枚举]]。核心问题是：Linux 已有某个 GPU/NIC 的 BDF，为什么驱动仍可能无法使用它？本篇从设备身份走到地址资源，解释配置空间、BAR、MMIO 和上游资源窗口。DMA/IOMMU、中断、链路与错误恢复后续分别展开，不把本篇成文视为第 4 阶段全部完成。
 
 参考场景仍是 x86 多 GPU 服务器；以下 BDF、BAR 大小、寄存器偏移和地址范围全部为教学构造，不是 H100 实际寄存器表、DGX 固定配置或用户服务器输出。
 
@@ -153,4 +153,4 @@ journalctl -k -b --no-pager | grep -Ei 'BAR|no space|failed to assign|resource'
 
 教学地址计算和窗口包含关系已作一致性检查；没有设备寄存器读写、BAR 探测写入、BIOS 修改或实机实验。实际平台转换、GPU BAR 布局、版本及故障日志仍待用户服务器信息确定。
 
-下一篇继续第 4 阶段的 DMA 与 IOMMU，区分 CPU 虚拟地址、物理地址、DMA address/IOVA 和 GPU 内存，并解释设备如何在驱动建立映射后访问内存。本篇说明的是 CPU 到设备资源的访问，下一篇补齐设备到内存的数据路径，再连接中断及链路错误。
+下一篇见 [[02-AISystem/cluster-and-hardware/05-DMA与IOMMU：设备如何访问内存|DMA 与 IOMMU：设备如何访问内存]]，继续第 4 阶段，区分 CPU 虚拟地址、物理地址、DMA address/IOVA 和 GPU 内存，并解释映射生命周期。本篇说明 CPU 到设备资源的访问，下一篇补齐设备到内存的数据路径，再连接中断及链路错误。

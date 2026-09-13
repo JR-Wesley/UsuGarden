@@ -10,58 +10,6 @@
 
 [用 AI 操作知识库](#用-ai-操作知识库) · [领域导航](#领域导航) · [学习路径](#学习路径) · [使用方式](#使用方式) · [Digital Garden](https://jr-wesley.github.io/MyDigitalGarden/)
 
-## 用 AI 操作知识库
-
-本 README 是用户入口。每次想让 AI 阅读、生成、整理或维护知识时，从这里选择需求；打开对应提示词文件，复制其中完整的 `text` 代码块，填写 `【】` 中会影响结果的信息，再发送给能够访问本仓库或你所提供材料的 AI 对话。
-
-### 最简单的开始方式
-
-| 你的情况 | 打开这个入口 | 使用方法 |
-| --- | --- | --- |
-| 不确定该选什么功能 | [知识库智能入口](AI-Workspace/02-Prompts/00-Knowledge-Workbench.md) | 描述目标、材料和允许动作，由 AI 选择工作流并执行 |
-| 目标明确，属于一次性小任务 | [快速任务](AI-Workspace/02-Prompts/00-Quick-Task.md) | 填写目标、范围和完成标准 |
-| 要按学习列表持续建设一组知识 | [系统知识建设](AI-Workspace/02-Prompts/16-System-Knowledge-Research-And-Write.md) | 提供学习需求、主题列表和材料范围 |
-| 工作会跨阶段、多个对话或大量文件 | [统筹项目](AI-Workspace/02-Prompts/07-Coordinate-Team.md) | 提供最终目标、授权范围与完成标准 |
-
-通常从“知识库智能入口”开始即可。AI 会继续使用当前对话中的上下文；不需要每一步重新复制提示词。只有确实更换对话、需要独立审阅或任务可以并行时，才使用项目、交接或专家入口。
-
-### 按日常需求选择
-
-| 我想做什么 | 用户应打开的提示词 |
-| --- | --- |
-| 根据已有笔记回答问题、比较观点、找缺口 | [向知识库提问](AI-Workspace/02-Prompts/17-Ask-Vault.md) |
-| 处理网页、PDF、图片、摘录或临时想法 | [采集与处理材料](AI-Workspace/02-Prompts/18-Capture-And-Process.md) |
-| 阅读论文、书籍、课程、规范或源码 | [阅读来源](AI-Workspace/02-Prompts/19-Study-Source.md) |
-| 调研一个问题或写一篇新笔记 | [主题研究](AI-Workspace/02-Prompts/08-Research-Topic.md) · [生成知识笔记](AI-Workspace/02-Prompts/09-Write-Knowledge.md) |
-| 修改现有笔记或检查内容质量 | [编辑知识](AI-Workspace/02-Prompts/12-Edit-Knowledge.md) · [审阅交付](AI-Workspace/02-Prompts/10-Review-Deliverable.md) |
-| 综合多篇笔记、建立 WikiLink 或 MOC | [综合与连接](AI-Workspace/02-Prompts/20-Synthesize-And-Connect.md) |
-| 设计实验、运行获准实践、整理实测结果 | [实验与验证](AI-Workspace/02-Prompts/21-Experiment-And-Validate.md) |
-| 制定学习路线，或从日记与复盘中提炼下一步 | [学习规划](AI-Workspace/02-Prompts/11-Plan-Learning.md) · [处理日记与复盘](AI-Workspace/02-Prompts/22-Process-Daily-Notes.md) |
-| 定期检查知识成熟度、陈旧内容和缺口 | [周期性知识复查](AI-Workspace/02-Prompts/23-Review-Knowledge-System.md) |
-| 维护链接、附件、Metadata、MOC、索引、目录或命名 | [知识结构维护](AI-Workspace/02-Prompts/24-Maintain-Knowledge-Structure.md) · [目录整理](AI-Workspace/02-Prompts/02-Organize-Vault.md) |
-| 整理单篇 Markdown，或只读检查一批笔记 | [单文件格式](AI-Workspace/02-Prompts/01-Format-One-Note.md) · [只读检查](AI-Workspace/02-Prompts/03-Audit-Notes.md) |
-| 从缺口和待办中安排下一批知识工作 | [知识工作排期](AI-Workspace/02-Prompts/25-Plan-Knowledge-Backlog.md) |
-| 启动、继续、交接或收尾一个长期项目 | [统筹项目](AI-Workspace/02-Prompts/07-Coordinate-Team.md) · [启动或继续](AI-Workspace/02-Prompts/04-Start-Or-Resume-Project.md) · [对话交接](AI-Workspace/02-Prompts/05-Handoff-Conversation.md) · [项目收尾](AI-Workspace/02-Prompts/06-Close-And-Improve.md) |
-| 给长期参与的 AI 对话指定固定职责 | [长期专家接入（可选）](AI-Workspace/02-Prompts/00-Join-As-Expert.md) |
-| 查询历史项目或总结当前对话 | [查询项目档案](AI-Workspace/02-Prompts/14-Query-Project-Archives.md) · [总结当前对话](AI-Workspace/02-Prompts/15-Summarize-Current-Conversation.md) |
-| 调整或扩展 AI 提示词体系 | [维护提示词与使用指南](AI-Workspace/02-Prompts/13-Extend-Prompts-And-Guide.md) |
-
-[查看完整提示词目录](AI-Workspace/02-Prompts/README.md)
-
-### 用户入口与 AI 对话入口
-
-| 层级 | 面向谁 | 作用 |
-| --- | --- | --- |
-| 本 README | 用户 | 按目标找到正确功能，打开并复制一份提示词 |
-| `AI-Workspace/02-Prompts` 中的提示词 | 收到消息的 AI 对话 | 提供本次任务的输入、边界、执行方式和交付要求 |
-| [工作流路由表](AI-Workspace/02-Prompts/Workflow-Catalog.md) | 使用智能入口的 AI | 从用户意图选择一项主工作流，不加载全部提示词 |
-| [AGENTS.md](AGENTS.md) | 在仓库中工作的 AI | 提供始终适用的最小边界和按需规则路由 |
-| [项目档案](AI-Workspace/03-Projects/README.md) | 用户与长任务 AI | 保存跨阶段任务的状态、成果和证据 |
-
-用户不需要把整个 README、全部提示词或维护规则一起发送。一次选择一个入口即可；AI 根据提示词读取完成任务所需的规则和材料。只有明确允许创建或修改文件时，提示词才授权对应写入。`AI-Workspace` 是本机 AI 操作空间，已与知识领域目录分离并从 Git 版本跟踪中排除。
-
-所有会生成或实质编辑知识笔记的入口共享同一套成文规范：默认使用清晰、自然、逻辑连贯且信息密度合适的段落，标题、列表和表格只在内容关系确实需要时使用。具体语言风格仍由主题、读者和任务类型决定，不把技术写作习惯强加给旅行、生活、创作或其他领域。
-
 ## 领域导航
 
 | 领域                                                                          | 内容与边界                    | 主要主题                                                                                                      |
@@ -111,6 +59,18 @@ Domain → Topic → Concept / System
 技术笔记强调定义、架构、数据结构、调用关系、性能模型和实验依据；个人成长笔记保留观点、论证、证据与反思，不机械拆成碎片。
 
 这些是持续维护的方向，尚未在全部历史笔记中统一落实。当前不少目录页由 Zoottelkeeper 自动生成，用于查找文件；人工知识地图则需要进一步说明概念关系和学习顺序。
+
+## 用 AI 操作知识库
+
+本页是知识库用户入口，目标是告诉你“去哪里”就够，不需要在这里看到完整的接口列表。
+
+如果你不确定该从哪开始，先打开 [AI 对话入口总览](AI-Workspace/02-Prompts/README.md)；对于一般需求建议先用 [知识库智能入口](AI-Workspace/02-Prompts/00-Knowledge-Workbench.md)。智能入口会先读取 [工作流路由表](AI-Workspace/02-Prompts/Workflow-Catalog.md)，选出单一主流程并按需继续。
+
+需要快速独立的小任务时，用 [快速任务](AI-Workspace/02-Prompts/00-Quick-Task.md)。需要跨对话、并行或高影响批量变更时，用 [统筹项目](AI-Workspace/02-Prompts/07-Coordinate-Team.md)。
+
+新增功能：当你告诉我某个学习主题时，可以直接走 [学习辅导](AI-Workspace/02-Prompts/26-Learning-Tutor.md)；AI 先定位现有文档、给出理解路径，再补齐关键知识点。若你希望改进现有文档可用 [文档改进](AI-Workspace/02-Prompts/27-Document-Improvement.md)，输出修改建议或按授权直接改写。
+
+凡涉及知识正文成文的任务，默认使用清晰、自然、逻辑连贯且信息密度适当的段落表达。`AI-Workspace` 与领域知识库分离，并在 `.gitignore` 中排除。
 
 ## 学习路径
 

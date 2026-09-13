@@ -1,6 +1,6 @@
 # PCIe 拓扑与 BDF：从设备地址追踪上游
 
-本篇对应 [[02-AISystem/cluster-and-hardware/GPU服务器：从物理硬件到Linux设备系统|GPU 服务器学习地图]] 第 2 阶段，承接 [[02-AISystem/cluster-and-hardware/物理服务器、NUMA与PCIe根层次|物理服务器、NUMA 与 PCIe 根层次]]。目标是拿到一个 PCI BDF 后，能确定它属于哪种 function、位于哪条分支、经过哪些上游 Bridge，以及当前证据是否足以指向某个故障范围。完整上电时序、BAR 分配和驱动 probe 留给后续主题。
+本篇对应 [[02-AISystem/cluster-and-hardware/00-Overview-GPU服务器：从物理硬件到Linux设备系统|GPU 服务器学习地图]] 第 2 阶段，承接 [[02-AISystem/cluster-and-hardware/01-物理服务器、NUMA与PCIe根层次|物理服务器、NUMA 与 PCIe 根层次]]。目标是拿到一个 PCI BDF 后，能确定它属于哪种 function、位于哪条分支、经过哪些上游 Bridge，以及当前证据是否足以指向某个故障范围。完整上电时序、BAR 分配和驱动 probe 留给后续主题。
 
 贯穿平台仍是多 GPU 服务器，但本文所有 BDF、总线范围和输出片段都是人工构造的教学示意，不是 DGX H100 固定地址或用户服务器实测。物理服务器提供应用背景，PCIe 机制归入本目录，避免将通用知识重复写入 GPU 和 NCCL 笔记。
 
@@ -184,4 +184,4 @@ NVLink/NVSwitch 构成的 GPU fabric 也不是 PCIe 树的另一种打印格式�
 
 本文没有下载或逐章核查 PCI-SIG 完整规范，也没有开展固定版本枚举源码调用链分析。总线表、ASCII 树和 Debug 场景是教学构造，真实服务器、driver/firmware 版本与历史 XML 来源仍未知。本文所有 Linux 命令未实机运行；正文自检不代表平台验证。
 
-下一篇见 [[02-AISystem/cluster-and-hardware/从上电到设备枚举：Firmware与Linux的职责边界|从上电到设备枚举：Firmware 与 Linux 的职责边界]]，对应第 3 阶段：串起供电/复位、BIOS/UEFI、设备 firmware、ACPI、PCI 核心与驱动接管，解释为什么设备可能停在不同的启动边界。BAR 和传输机制随后进入第 4 阶段。
+下一篇见 [[02-AISystem/cluster-and-hardware/03-从上电到设备枚举：Firmware与Linux的职责边界|从上电到设备枚举：Firmware 与 Linux 的职责边界]]，对应第 3 阶段：串起供电/复位、BIOS/UEFI、设备 firmware、ACPI、PCI 核心与驱动接管，解释为什么设备可能停在不同的启动边界。BAR 和传输机制随后进入第 4 阶段。

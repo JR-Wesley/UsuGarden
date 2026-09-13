@@ -28,13 +28,32 @@ Linux 将设备与驱动分开建模。设备对象存在不要求功能驱动�
 
 ## 2. 在知识库中的位置与关联
 
-本主题主入口放在 [[02-AISystem/cluster-and-hardware/cluster-and-hardware|集群与硬件]]，因为这里已经承担单机拓扑与服务器硬件。通用机制回到原有专业目录，服务器笔记负责串联，避免另建一套包含 PCIe、OS、GPU 和通信库的平行体系。
+本系列统一保存在 `02-AISystem/cluster-and-hardware/`，从 [[02-AISystem/cluster-and-hardware/cluster-and-hardware|集群与硬件目录入口]] 进入本 Overview。按用户明确调整，原 SoC/PCIE 的全部笔记及 DMA/IOMMU 正文已迁入同一目录；服务器主线中的 PCIe、Linux 机制和后续通信衔接篇也在这里连续维护。体系结构、OS、GPU、RDMA/NCCL 的既有专题仍通过链接提供基础和深入资料，不复制或移动这些邻近内容。
+
+文件前缀表示阅读顺序，不等于下文八个学习阶段的编号：第 4 阶段拆为 04—07 多篇。00 为总览，01—10 已成文；11 是后续拟定顺序，尚未创建文件。
+
+| 文件顺序 | 主题与依赖 | 对应学习阶段 / 状态 |
+| --- | --- | --- |
+| 00 | 本 Overview：范围、参考模型与知识关联 | 导航，已成文 |
+| 01 | [[02-AISystem/cluster-and-hardware/01-物理服务器、NUMA与PCIe根层次|物理服务器、NUMA 与 PCIe 根层次]] | 阶段 1，已成文 |
+| 02 | [[02-AISystem/cluster-and-hardware/02-PCIe拓扑与BDF：从设备地址追踪上游|PCIe 拓扑与 BDF]]；依赖物理连接模型 | 阶段 2，已成文 |
+| 03 | [[02-AISystem/cluster-and-hardware/03-从上电到设备枚举：Firmware与Linux的职责边界|从上电到设备枚举]]；依赖拓扑与身份 | 阶段 3，已成文 |
+| 04 | [[02-AISystem/cluster-and-hardware/04-配置空间、BAR与MMIO：从设备身份到地址资源|配置空间、BAR 与 MMIO]]；从发现走向资源 | 阶段 4，已成文 |
+| 05 | [[02-AISystem/cluster-and-hardware/05-DMA与IOMMU：设备如何访问内存|DMA 与 IOMMU]]；从资源访问走向数据搬运 | 阶段 4，已成文 |
+| 06 | [[02-AISystem/cluster-and-hardware/06-MSI与MSI-X：从数据完成到中断通知|MSI 与 MSI-X：从数据完成到中断通知]]；设备完成、IRQ、队列与 CPU affinity | 阶段 4，已成文 |
+| 07 | [[02-AISystem/cluster-and-hardware/07-PCIe链路、AER与错误恢复：从可见设备到运行中稳定性|PCIe 链路、AER 与错误恢复]]；从静态可见性走向运行中稳定性 | 阶段 4，已成文 |
+| 08 | [[02-AISystem/cluster-and-hardware/08-Linux设备模型、驱动与sysfs：把BDF映射到内核对象|Linux device/driver/class 与 sysfs]]；把 BDF 映射到内核对象和功能视图 | 阶段 5，已成文 |
+| 09 | [[02-AISystem/cluster-and-hardware/09-KMD、用户态驱动与设备可见性：从内核绑定到GPU通信|KMD、用户态驱动与设备可见性]]；从内核绑定、设备节点到 CUDA/RDMA/NCCL | 阶段 6，已成文 |
+| 10 | [[02-AISystem/cluster-and-hardware/10-NVLink与NVSwitch、RDMA、NUMA和NCCL：从拓扑到通信路径|NVLink/NVSwitch、RDMA、NUMA 与 NCCL]]；从物理拓扑到通信库选路 | 阶段 7，已成文 |
+| 11 | [[02-AISystem/cluster-and-hardware/11-GPU服务器综合排障：从现象到证据链与最小验证|GPU 服务器综合排障]]；把各层现象串成证据链和最小验证 | 阶段 8，已成文 |
+
+`PCIE.md` 保留为迁入的 PCIe 专题导航，`深入浅出pcie.md` 保留为来源入口，二者不占主线编号。`cluster-and-hardware.md` 同时导航本系列与目录里的其他既有主题；本文负责解释学习顺序与机制依赖，不把整个目录合并成一个大文件。后续如确需分篇，再同步调整计划编号和导航。
 
 | 已有位置 | 在本学习体系中的作用 | 内容边界与衔接方式 |
 | --- | --- | --- |
 | [[01-ComputerScience/Architecture/Architecture|体系结构]] | CPU、内存层次、处理器互联的基础 | 为 NUMA 与 IO 访问路径提供前提；本入口不复制教材结构 |
-| [[01-ComputerScience/SoC/PCIE/PCIE|PCIe]] | 拓扑、配置空间、枚举、BAR、链路和事务 | 新的通用 PCIe 机制笔记放在该目录；现有《深入浅出pcie》目前主要是来源入口，不视为已完成协议知识 |
-| [[01-ComputerScience/operating-system/operating-system|操作系统]] | device model、驱动绑定、DMA/IOMMU 与内核接口 | 通用 Linux 机制在这里展开，使用 GPU/NIC 作为例子 |
+| [[02-AISystem/cluster-and-hardware/PCIE|PCIe]] | 拓扑、配置空间、枚举、BAR、链路和事务 | 已整体迁入本目录；《深入浅出pcie》仍主要是来源入口，不视为已完成协议知识 |
+| [[01-ComputerScience/operating-system/operating-system|操作系统]] | 页表、内存、进程与通用 IO 基础 | 保留跨领域关联；本服务器系列的 DMA、device model 等正文集中在当前目录 |
 | [[02-AISystem/cluster-and-hardware/单机拓扑分析|单机拓扑分析]] | 后续真实材料解读候选 | 已有含 BDF、NUMA、GPU/NIC 的 XML；来源与硬件环境待确认，不能直接当成完整 PCIe 树或 DGX H100 实测 |
 | [[02-AISystem/cluster-and-hardware/接口硬件模块|接口硬件模块]] | 接口与互联硬件资料入口 | 目前含外部来源链接；后续按问题核查，不当作已验证结论 |
 | [[02-AISystem/cluster-and-hardware/集群架构|集群架构]] | 从单机扩展到跨节点 | 在掌握单机设备、NIC 与网络路径后继续 |
@@ -53,13 +72,13 @@ Linux 将设备与驱动分开建模。设备对象存在不要求功能驱动�
 | 顺序 | 主题与需要回答的问题 | 主要观察入口 | 推荐落点与完成证据 |
 | --- | --- | --- | --- |
 | 1 | 物理服务器与 NUMA：CPU socket、内存控制器、DIMM、GPU/HBM、NIC、NVMe、PCIe Switch 如何连接；BMC/MCU/CPLD 位于哪里 | 平台框图、`lscpu`、`numactl -H` | `cluster-and-hardware`；能画出主机内存、IO、GPU fabric 与管理关系，解释 socket 不一定等于 NUMA node |
-| 2 | PCIe 拓扑与身份：Root Complex、Root Port、Bridge、Endpoint、domain、BDF；Switch 端口如何表示 | `lspci -D -t`、sysfs 父路径 | `SoC/PCIE`；能从 endpoint 追踪上游并区分 BDF、槽位与设备身份 |
+| 2 | PCIe 拓扑与身份：Root Complex、Root Port、Bridge、Endpoint、domain、BDF；Switch 端口如何表示 | `lspci -D -t`、sysfs 父路径 | 本目录 02；能从 endpoint 追踪上游并区分 BDF、槽位与设备身份 |
 | 3 | 从上电到枚举：BIOS/UEFI、ACPI、BMC 与设备 firmware 的职责；链路、扫描和资源处理的依赖 | 启动日志、平台配置、BMC 事件 | `cluster-and-hardware`；能区分未枚举与驱动未初始化，提出可验证的下一步 |
-| 4 | PCIe 资源与传输：配置空间、BAR、MMIO、DMA、IOMMU、MSI/MSI-X、速率/宽度、AER | `lspci -vv`、`resource`、`/proc/iomem`、内核日志 | `SoC/PCIE`，通用内存机制关联 OS；能解释枚举成功为何不代表资源和数据通路可用 |
-| 5 | Linux device model：bus/device/driver/class，匹配、probe、绑定、模块与驱动的区别 | `/sys/devices`、`/sys/bus/pci`、`driver`、`lspci -k` | `operating-system`；能区分不存在、未绑定、probe 失败与运行期故障 |
-| 6 | 用户态可见性：KMD、用户态驱动、CUDA/NVML、设备节点、权限、容器与编号 | `/dev`、`/proc`、`nvidia-smi`、class 路径 | GPU 实现放 `GPU`，通用机制关联 OS；能追踪宿主机可见而应用不可见的原因 |
-| 7 | 多 GPU 和跨机通信：NVLink/NVSwitch、FM、RDMA、GPUDirect RDMA、NCCL 与 NUMA/PCIe 路径 | GPU 拓扑、RDMA 信息、FM/NCCL 日志 | 硬件/fabric 关系在 `cluster-and-hardware`；RDMA/NCCL 在现有目录；能区分物理路径与软件选路 |
-| 8 | 综合排障：未枚举、BDF 消失、链路退化、probe 失败、GPU/NIC 不可见、拓扑不符 | 正常/异常快照、日志时间线、平台资料 | `cluster-and-hardware`；形成证据 → 假设 → 验证 → 缩小范围的案例，而非只罗列命令 |
+| 4 | PCIe 资源与传输：配置空间、BAR、MMIO、DMA、IOMMU、MSI/MSI-X、速率/宽度、AER | `lspci -vv`、`resource`、`/proc/iomem`、内核日志 | 本目录 04—07；能解释枚举成功为何不代表资源和数据通路可用 |
+| 5 | Linux device model：bus/device/driver/class，匹配、probe、绑定、模块与驱动的区别 | `/sys/devices`、`/sys/bus/pci`、`driver`、`lspci -k` | 本目录 08，关联 OS；能区分不存在、未绑定、probe 失败与运行期故障 |
+| 6 | 用户态可见性：KMD、用户态驱动、CUDA/NVML、设备节点、权限、容器与编号 | `/dev`、`/proc`、`nvidia-smi`、class 路径 | 本目录 09，关联 GPU/OS；能追踪宿主机可见而应用不可见的原因 |
+| 7 | 多 GPU 和跨机通信：NVLink/NVSwitch、FM、RDMA、GPUDirect RDMA、NCCL 与 NUMA/PCIe 路径 | GPU 拓扑、RDMA 信息、FM/NCCL 日志 | 本目录 10，链接既有 RDMA/NCCL 专题；能区分物理路径与软件选路 |
+| 8 | 综合排障：未枚举、BDF 消失、链路退化、probe 失败、GPU/NIC 不可见、拓扑不符 | 正常/异常快照、日志时间线、平台资料 | 本目录 11；形成证据 → 假设 → 验证 → 缩小范围的案例，而非只罗列命令 |
 
 第一遍不展开 PCIe 包格式、完整内核调用链或 NCCL 全部算法。源码研究进入具体主题后再固定 kernel/driver 版本和符号；实验完成状态必须由真实结果支持。
 
@@ -193,10 +212,14 @@ NCCL 运行依赖底层设备、拓扑和系统配置，不能用“CUDA 单卡�
 
 已成文主题按学习顺序衔接：
 
-1. [[02-AISystem/cluster-and-hardware/物理服务器、NUMA与PCIe根层次|物理服务器、NUMA 与 PCIe 根层次]]：主机内存、IO、GPU fabric 与管理关系。
-2. [[01-ComputerScience/SoC/PCIE/PCIe拓扑与BDF：从设备地址追踪上游|PCIe 拓扑与 BDF]]：地址、Bridge 总线范围和 sysfs 父路径。
-3. [[02-AISystem/cluster-and-hardware/从上电到设备枚举：Firmware与Linux的职责边界|从上电到设备枚举]]：firmware、平台描述、PCI 发现与功能驱动接管。
+1. [[02-AISystem/cluster-and-hardware/01-物理服务器、NUMA与PCIe根层次|物理服务器、NUMA 与 PCIe 根层次]]：主机内存、IO、GPU fabric 与管理关系。
+2. [[02-AISystem/cluster-and-hardware/02-PCIe拓扑与BDF：从设备地址追踪上游|PCIe 拓扑与 BDF]]：地址、Bridge 总线范围和 sysfs 父路径。
+3. [[02-AISystem/cluster-and-hardware/03-从上电到设备枚举：Firmware与Linux的职责边界|从上电到设备枚举]]：firmware、平台描述、PCI 发现与功能驱动接管。
 
-4. 第 4 阶段首篇 [[01-ComputerScience/SoC/PCIE/配置空间、BAR与MMIO：从设备身份到地址资源|配置空间、BAR 与 MMIO]]：从设备身份到地址资源、上游窗口与资源失败。
+4. 第 4 阶段首篇 [[02-AISystem/cluster-and-hardware/04-配置空间、BAR与MMIO：从设备身份到地址资源|配置空间、BAR 与 MMIO]]：从设备身份到地址资源、上游窗口与资源失败。
 
-下一篇继续第 4 阶段的 DMA/IOMMU，之后展开中断和链路错误；该阶段尚未全部成文。跨轮状态保存在 [[AI-Workspace/03-Projects/2026-09-GPU-Server-System/README|GPU 服务器系统学习项目]]；正文成文不代表完成实机验证。
+第 4 阶段第二篇 [[02-AISystem/cluster-and-hardware/05-DMA与IOMMU：设备如何访问内存|DMA 与 IOMMU]] 补齐设备到内存的地址与生命周期机制，依赖上一篇 BAR/MMIO，并衔接 RDMA 注册与 GPU peer memory。
+
+第 4 阶段第三篇 [[02-AISystem/cluster-and-hardware/06-MSI与MSI-X：从数据完成到中断通知|MSI 与 MSI-X]] 补齐完成通知、Linux IRQ、队列与 CPU affinity，依赖 DMA/IOMMU 的 buffer 生命周期。
+
+主线基础正文至此完成。下一步应以真实服务器快照、版本信息和受控通信测试补充第 1—11 篇中的实机验证。跨轮状态保存在 [[AI-Workspace/03-Projects/2026-09-GPU-Server-System/README|GPU 服务器系统学习项目]]；正文成文不代表完成实机验证。
